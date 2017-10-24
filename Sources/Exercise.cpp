@@ -3,61 +3,53 @@
 #include <Kore/IO/FileReader.h>
 #include <Kore/Math/Core.h>
 #include <Kore/System.h>
-#include <Kore/Audio/Mixer.h>
-#include "SimpleGraphics.h"
+#include <Kore/Audio1/Audio.h>
+#include <Kore/Graphics1/Graphics.h>
+#include "GraphicsHelper.h"
+
+const int width = 512;
+const int height = 512;
 
 using namespace Kore;
 
 namespace {
 	double startTime;
-	Texture* image;
+	Graphics4::Texture* image;
+
+	void init() {
+		image = loadTexture("irobert-fb.png");
+		Kore::Audio1::play(new SoundStream("back.ogg", true));
+
+	}
 
 	void update() {
 		float t = (float)(System::time() - startTime);
-		Kore::Audio::update();
+		//Kore::Audio1::update();
 		
-		startFrame();
+		Graphics1::begin();
 
 		/************************************************************************/
 		/* Exercise 2, Practical Task:   
 		/* Add some interesting animations or effects here          
 		/************************************************************************/
-		clear(0.0f, 0, 0);
+		clear(0.0f, 0.0f, 0.0f);
 		drawTexture(image, (int)(sin(t) * 400), (int)(abs(sin(t * 1.5f)) * 470));
 
-		endFrame();
+		Graphics1::end();
 	}
 }
 
 int kore(int argc, char** argv) {
+	System::init("Exercise 1", width, height);
 
-	Kore::System::setName("TUD Game Technology - ");
-	Kore::System::setup();
-	Kore::WindowOptions options;
-	options.title = "Exercise 2";
-	options.width = width;
-	options.height = height;
-	options.x = 100;
-	options.y = 100;
-	options.targetDisplay = -1;
-	options.mode = WindowModeWindow;
-	options.rendererOptions.depthBufferBits = 16;
-	options.rendererOptions.stencilBufferBits = 8;
-	options.rendererOptions.textureFormat = 0;
-	options.rendererOptions.antialiasing = 0;
-	Kore::System::initWindow(options);
-
-	initGraphics();
+	Graphics1::init(width, height);
 	Kore::System::setCallback(update);
-
-
-	
+		
 	startTime = System::time();
 	
-	image = loadTexture("irobert-fb.png");
-	Kore::Mixer::init();
-	Kore::Audio::init();
-	Kore::Mixer::play(new SoundStream("back.ogg", true));
+	Kore::Audio1::init();
+
+	init();
 
 	Kore::System::start();
 
