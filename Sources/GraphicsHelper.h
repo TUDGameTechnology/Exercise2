@@ -1,13 +1,11 @@
 #pragma once
 
-namespace Kore {
-	namespace Graphics4 {
-		class Texture;
-	}
-}
-
+// Clears the screen to a single color
 void clear(float red, float green, float blue);
-Kore::Graphics4::Texture* loadTexture(const char* filename);
-void destroyTexture(Kore::Graphics4::Texture* image);
-void drawTexture(Kore::Graphics4::Texture* image, int x, int y);
-int readPixel(Kore::Graphics4::Texture* image, int x, int y);
+
+// Loads an image into the memory pointed to by memory.
+// Also sets the width and height parameters to the image dimensions.
+void loadImage(const char* filename, Kore::u8* memory, int* width, int* height);
+
+// Draws 32bit RGBA pixels (for examples the ones loaded via loadImage)
+void drawImage(Kore::u8* image, int imageWidth, int imageHeight, int x, int y);
