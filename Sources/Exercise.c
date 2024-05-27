@@ -11,8 +11,8 @@
 
 #include "GraphicsHelper.h"
 
-const int width = 512;
-const int height = 512;
+#define WIDTH 512
+#define HEIGHT 512
 
 double start_time;
 
@@ -52,9 +52,9 @@ void update(void* data) {
 }
 
 int kickstart(int argc, char** argv) {
-	kinc_init("Exercise 2", width, height, NULL, NULL);
+	kinc_init("Exercise 2", WIDTH, HEIGHT, NULL, NULL);
 
-	kinc_g1_init(width, height);
+	kinc_g1_init(WIDTH, HEIGHT);
 	kinc_set_update_callback(update, NULL);
 
 	start_time = kinc_time();
