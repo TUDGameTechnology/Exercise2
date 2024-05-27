@@ -42,7 +42,7 @@ void update(void* data) {
 	/* GraphicsHelper.h has some new helper functions.
 	/************************************************************************/
 	clear(0.0f, 0.0f, 0.0f);
-	draw_image(image.data, image.width, image.height, (int)(sin(t) * 400), (int)(abs(sin(t * 1.5f)) * 470));
+	draw_image(image.data, image.width, image.height, (int)(sin(t) * 400), abs((int)sin(t * 1.5f)) * 470);
 
 	kinc_g1_end();
 }
