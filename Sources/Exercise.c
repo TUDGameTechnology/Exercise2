@@ -16,7 +16,7 @@ const int height = 512;
 
 double start_time;
 
-uint8_t* memory; // 10 MiB of memory - should be enough for anything
+uint8_t* memory;
 
 // Add more simple variables if you like to
 // but put bigger things in memory.
@@ -61,7 +61,7 @@ int kickstart(int argc, char** argv) {
 
 	kinc_a1_init();
 
-	memory = malloc(10 * 1024 * 1024);
+	memory = malloc(10 * 1024 * 1024); // 10 MiB of memory - should be enough for anything
 	init();
 
 	kinc_start();
