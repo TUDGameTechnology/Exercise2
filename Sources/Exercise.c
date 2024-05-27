@@ -5,6 +5,7 @@
 #include <kinc/audio1/audio.h>
 #include <kinc/audio2/audio.h>
 #include <kinc/graphics1/graphics.h>
+#include <kinc/image.h>
 #include <kinc/io/filereader.h>
 #include <kinc/math/core.h>
 #include <kinc/system.h>
@@ -16,18 +17,13 @@
 
 double start_time;
 
-uint8_t* memory;
-
-// Add more simple variables if you like to
-// but put bigger things in memory.
-// Avoid allocations.
-int image_width;
-int image_height;
+kinc_image_t image;
 
 void init() {
 	// Load more images if you like but keep their size in mind.
 	// This only supports 32bit RGBA files, so the size in memory is width * height * 4.
-	load_image("irobert-fb.png", memory, &image_width, &image_height);
+	uint8_t* memory = malloc(10 * 1024 * 1024); // 10 MiB of memory - should be enough for anything
+	kinc_image_init_from_file(&image, memory, "irobert-fb.png");
 
 	// Please replace the sound
 	kinc_a1_sound_stream_t* sound = kinc_a1_sound_stream_create("back.ogg", true);
@@ -46,7 +42,7 @@ void update(void* data) {
 	/* GraphicsHelper.h has some new helper functions.
 	/************************************************************************/
 	clear(0.0f, 0.0f, 0.0f);
-	draw_image(memory, image_width, image_height, (int)(sin(t) * 400), (int)(abs(sin(t * 1.5f)) * 470));
+	draw_image(image.data, image.width, image.height, (int)(sin(t) * 400), (int)(abs(sin(t * 1.5f)) * 470));
 
 	kinc_g1_end();
 }
@@ -61,7 +57,6 @@ int kickstart(int argc, char** argv) {
 
 	kinc_a1_init();
 
-	memory = malloc(10 * 1024 * 1024); // 10 MiB of memory - should be enough for anything
 	init();
 
 	kinc_start();

@@ -1,7 +1,6 @@
 #include <limits.h>
 #include <string.h>
 
-#include <kinc/image.h>
 #include <kinc/graphics1/graphics.h>
 #include <kinc/io/filereader.h>
 #include <kinc/math/core.h>
@@ -14,13 +13,6 @@ void clear(float red, float green, float blue) {
 			kinc_g1_set_pixel(x, y, red, green, blue);
 		}
 	}
-}
-
-void load_image(const char* filename, uint8_t* memory, int* image_width, int* image_height) {
-	kinc_image_t image;
-	kinc_image_init_from_file(&image, memory, filename);
-	*image_width = image.width;
-	*image_height = image.height;
 }
 
 int read_pixel(uint8_t* image, int image_width, int image_height, int x, int y) {
